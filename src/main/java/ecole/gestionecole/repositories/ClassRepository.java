@@ -7,5 +7,7 @@ import java.util.Optional;
 
 @Repository
 public interface ClassRepository extends JpaRepository<Classes, Integer> {
-    Optional<Classes> findByNom(String nom);
+    Optional<Classes> findByName(String name);
+    boolean existsByName(String name);
+
 }

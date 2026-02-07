@@ -16,7 +16,7 @@ public class Classes {
     Integer id;
 
     @Column (nullable = false, unique = true)
-    String nom;
+    String name;
     
     
 }

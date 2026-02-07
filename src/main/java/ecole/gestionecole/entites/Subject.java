@@ -17,7 +17,7 @@ public class Subject {
     Integer id;
 
     @Column(nullable = false, unique = true)
-    String nom;
+    String name;
 
     @Column(nullable = false)
     Integer coefficient;

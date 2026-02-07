@@ -3,7 +3,6 @@ package ecole.gestionecole.serviceImpl;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import ecole.gestionecole.DTO.AdminDTO;
 import ecole.gestionecole.entites.Admin;

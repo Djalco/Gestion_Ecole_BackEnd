@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminController {
     
-    private AdminService adminService;
+    private final AdminService adminService;
     
 
     // Implementation of endpoints for Admin functionalities

@@ -5,6 +5,7 @@ import org.mapstruct.factory.Mappers;
 import ecole.gestionecole.DTO.*;
 import ecole.gestionecole.entites.*;
 
+@org.mapstruct.Mapper
 public interface Mapper {
     
     static Mapper INSTANCE = Mappers.getMapper(Mapper.class);

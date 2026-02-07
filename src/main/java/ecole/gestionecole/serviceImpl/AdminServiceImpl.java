@@ -2,15 +2,22 @@ package ecole.gestionecole.serviceImpl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import ecole.gestionecole.DTO.AdminDTO;
 import ecole.gestionecole.entites.Admin;
 import ecole.gestionecole.mapper.Mapper;
 import ecole.gestionecole.repositories.AdminRepository;
 import ecole.gestionecole.services.AdminService;
+import lombok.RequiredArgsConstructor;
 
+@Service
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
-    private AdminRepository adminRepository;
+    private final AdminRepository adminRepository;
+    
     @Override
     public List<AdminDTO> getAllAdmins() {
         List<Admin> admins = adminRepository.findAll();
@@ -56,6 +63,4 @@ public class AdminServiceImpl implements AdminService {
     public void deleteAdmin(Integer id) {
         adminRepository.deleteById(id);
     }
-    
-    
 }

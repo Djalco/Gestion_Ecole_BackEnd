@@ -22,12 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SubjectController {
 
-    private SubjectService subjectService;
-
-
-    //-------
-    // CRUD
-    //-------
+    private final SubjectService subjectService;
 
     @PostMapping
     public ResponseEntity<SubjectDTO> createSubject(@RequestBody SubjectDTO subject) {
@@ -36,7 +31,7 @@ public class SubjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SubjectDTO> updateSubject(Integer id, @RequestBody SubjectDTO subject) {
+    public ResponseEntity<SubjectDTO> updateSubject(@PathVariable Integer id, @RequestBody SubjectDTO subject) {
         SubjectDTO updatedSubject = subjectService.updateSubject(id, subject);
         return ResponseEntity.ok(updatedSubject);
     }
@@ -54,7 +49,7 @@ public class SubjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SubjectDTO> getSubjectById(Integer id) {
+    public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable Integer id) {
         return ResponseEntity.ok(subjectService.getSubjectById(id));    
     }
 }

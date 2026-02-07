@@ -2,20 +2,21 @@ package ecole.gestionecole.serviceImpl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
+
 import ecole.gestionecole.DTO.ClassDTO;
 import ecole.gestionecole.entites.Classes;
 import ecole.gestionecole.mapper.Mapper;
 import ecole.gestionecole.repositories.ClassRepository;
 import ecole.gestionecole.services.ClassService;
 
+@Service
+@RequiredArgsConstructor
 public class ClassServiceImpl implements ClassService {
     
-      private ClassRepository classRepository;
+    private final ClassRepository classRepository;
 
-    //-----------
-    // Implementation of CRUD operations for Classes
-    //-----------
-    
     @Override
     public ClassDTO createClass(ClassDTO classDTO) {
         if(classRepository.existsByName(classDTO.getName())) {
@@ -49,10 +50,10 @@ public class ClassServiceImpl implements ClassService {
         classRepository.deleteById(id);
     }
 
-   @Override
+    @Override
     public List<ClassDTO> getAllClasses() {
-        List<Classes> classesList = classRepository.findAll();
-        return classesList.stream()
+        List<Classes> classes = classRepository.findAll();
+        return classes.stream()
                 .map(Mapper.INSTANCE::toClassesDTO)
                 .toList();
     }

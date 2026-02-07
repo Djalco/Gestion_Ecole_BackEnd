@@ -22,11 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/classes")
 @RequiredArgsConstructor
 public class ClassController {
-    private ClassService classService;
-    
-    //-----------
-    // Implementation of endpoints for Classes
-    //-----------
+    private final ClassService classService;
 
     @PostMapping
     public ResponseEntity<ClassDTO> createClass(@RequestBody ClassDTO classDTO) {
@@ -35,7 +31,7 @@ public class ClassController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClassDTO> updateClass(Integer id, @RequestBody ClassDTO classDTO) {
+    public ResponseEntity<ClassDTO> updateClass(@PathVariable Integer id, @RequestBody ClassDTO classDTO) {
         ClassDTO updatedClass = classService.updateClass(id, classDTO);
         return ResponseEntity.ok(updatedClass);
     }
@@ -53,9 +49,7 @@ public class ClassController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClassDTO> getClassById(Integer id) {
+    public ResponseEntity<ClassDTO> getClassById(@PathVariable Integer id) {
         return ResponseEntity.ok(classService.getClassById(id));
     }
-
-
 }

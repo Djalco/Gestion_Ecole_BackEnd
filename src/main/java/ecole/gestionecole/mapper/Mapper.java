@@ -1,5 +1,6 @@
 package ecole.gestionecole.mapper;
 
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import ecole.gestionecole.DTO.*;
@@ -22,7 +23,10 @@ public interface Mapper {
     ProfessorClassDTO toProfessorClassDTO(ProfessorClass professorClass);
     ProfessorClass toProfessorClass(ProfessorClassDTO dto);
 
+    @Mapping(target = "classId", source = "classEntity.id")
     StudentDTO toStudentDTO(Student student);
+
+    @Mapping(target = "classEntity.id", source = "classId")
     Student toStudent(StudentDTO dto);
 
     SubjectDTO toSubjectDTO(Subject subject);

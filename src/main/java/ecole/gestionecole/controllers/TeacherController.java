@@ -2,6 +2,7 @@ package ecole.gestionecole.controllers;
 
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/teachers")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class TeacherController {
     
     private final TeacherService teacherService;

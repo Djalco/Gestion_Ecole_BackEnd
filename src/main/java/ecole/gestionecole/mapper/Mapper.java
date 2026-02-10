@@ -23,10 +23,11 @@ public interface Mapper {
     ProfessorClassDTO toProfessorClassDTO(ProfessorClass professorClass);
     ProfessorClass toProfessorClass(ProfessorClassDTO dto);
 
-    @Mapping(target = "classId", source = "classEntity.id")
+    @Mapping(source = "classEntity.id", target = "classId")
+    @Mapping(source = "classEntity.name", target = "classeName") // LA LIGNE MAGIQUE
     StudentDTO toStudentDTO(Student student);
 
-    @Mapping(target = "classEntity.id", source = "classId")
+    @Mapping(source = "classId", target = "classEntity.id")
     Student toStudent(StudentDTO dto);
 
     SubjectDTO toSubjectDTO(Subject subject);

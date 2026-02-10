@@ -73,6 +73,5 @@ public class StudentServiceImpl implements StudentService {
                 .map(Mapper.INSTANCE::toStudentDTO)
                 .toList();
     }
-    
 
 }

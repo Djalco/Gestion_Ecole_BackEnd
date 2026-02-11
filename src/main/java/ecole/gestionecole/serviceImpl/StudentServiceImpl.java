@@ -2,6 +2,7 @@ package ecole.gestionecole.serviceImpl;
 
 import java.util.List;
 
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ecole.gestionecole.DTO.StudentDTO;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    //private final BCryptPasswordEncoder passwordEncoder;
     
     @Override
     public List<StudentDTO> getAllStudents() {
@@ -40,27 +42,41 @@ public class StudentServiceImpl implements StudentService {
         }
 
         Student student = Mapper.INSTANCE.toStudent(studentDTO);
+
+        //String encodedPassword = passwordEncoder.encode(student.getPassword());
+        student.setPassword(student.getPassword());
+
         Student savedStudent = studentRepository.save(student);
 
         return Mapper.INSTANCE.toStudentDTO(savedStudent);
     }
 
-    @Override
-    public StudentDTO updateStudent(Integer id, StudentDTO studentDTO) {
-        Student existingStudent = studentRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Student not found with id: " + id));     
+   @Override
+public StudentDTO updateStudent(Integer id, StudentDTO studentDTO) {
+    // 1. Récupérer l'existant
+    Student existingStudent = studentRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Student not found with id: " + id));
 
-        if(!existingStudent.getEmail().equals(studentDTO.getEmail()) 
+    // 2. Vérifier l'email
+    if (!existingStudent.getEmail().equals(studentDTO.getEmail())
             && studentRepository.existsByEmail(studentDTO.getEmail())) {
-            throw new IllegalArgumentException("Student with the same email already exists");
-        }
-
-        Student updatedStudent = Mapper.INSTANCE.toStudent(studentDTO);
-        updatedStudent.setId(id);
-        Student savedStudent = studentRepository.save(updatedStudent);
-
-        return Mapper.INSTANCE.toStudentDTO(savedStudent);
+        throw new IllegalArgumentException("Student with the same email already exists");
     }
+
+    existingStudent.setFirstName(studentDTO.getFirstName());
+    existingStudent.setLastName(studentDTO.getLastName());
+    existingStudent.setEmail(studentDTO.getEmail());
+    existingStudent.setPhoneNumber(studentDTO.getPhoneNumber());
+    existingStudent.setBirthDate(studentDTO.getBirthDate());
+
+    if (studentDTO.getPassword() != null && !studentDTO.getPassword().trim().isEmpty()) {
+        existingStudent.setPassword(studentDTO.getPassword());
+    }
+    
+    Student savedStudent = studentRepository.save(existingStudent);
+
+    return Mapper.INSTANCE.toStudentDTO(savedStudent);
+}
 
     @Override
     public void deleteStudent(Integer id) {

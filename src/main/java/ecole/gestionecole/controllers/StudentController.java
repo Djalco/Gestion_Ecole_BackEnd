@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ecole.gestionecole.DTO.StudentDTO;
 import ecole.gestionecole.services.StudentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -37,7 +38,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentDTO studentDTO) {
+    public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) {
         StudentDTO createdStudent = studentService.createStudent(studentDTO);
         return ResponseEntity.ok(createdStudent);
     }

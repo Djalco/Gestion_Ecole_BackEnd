@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,11 +40,7 @@ public class Student {
 
     @Column(nullable = false)
     String phoneNumber;
-
-    @Pattern(
-            regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$",
-            message = "Password must contain at least 8 characters, with at least one digit, one uppercase letter and one special character."
-    )    
+    
     @Column(nullable = false)
     String password;
 

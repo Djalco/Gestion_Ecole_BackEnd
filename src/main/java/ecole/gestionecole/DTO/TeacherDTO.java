@@ -12,7 +12,7 @@ public class TeacherDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private Integer phoneNumber;
+    private String phoneNumber;
     private String password;
     private Integer subjectId;
     private String subjectName;

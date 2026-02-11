@@ -26,7 +26,7 @@ public class Teacher {
     String email;
     
     @Column(nullable = false)
-    Integer phoneNumber;
+    String phoneNumber;
     
     @Pattern(
             regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$",

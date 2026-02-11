@@ -15,4 +15,5 @@ public class TeacherDTO {
     private Integer phoneNumber;
     private String password;
     private Integer subjectId;
+    private String subjectName;
 }

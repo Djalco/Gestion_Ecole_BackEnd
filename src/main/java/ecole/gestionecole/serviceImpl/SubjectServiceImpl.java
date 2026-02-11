@@ -3,31 +3,32 @@ package ecole.gestionecole.serviceImpl;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
 
 import ecole.gestionecole.DTO.SubjectDTO;
 import ecole.gestionecole.entites.Subject;
 import ecole.gestionecole.mapper.Mapper;
 import ecole.gestionecole.repositories.SubjectRepository;
 import ecole.gestionecole.services.SubjectService;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class SubjectServiceImpl implements SubjectService {
     
     private final SubjectRepository subjectRepository;
+    private final Mapper mapper;
 
     @Override
     public List<SubjectDTO> getAllSubjects() {
         return subjectRepository.findAll().stream()
-                .map(Mapper.INSTANCE::toSubjectDTO)
+                .map(mapper::toSubjectDTO)
                 .toList();
     }
 
     @Override
     public SubjectDTO getSubjectById(Integer id) {
         return subjectRepository.findById(id)
-                .map(Mapper.INSTANCE::toSubjectDTO)
+                .map(mapper::toSubjectDTO)
                 .orElseThrow(() -> new IllegalArgumentException("Subject not found with id: " + id));
     }
 
@@ -37,10 +38,10 @@ public class SubjectServiceImpl implements SubjectService {
             throw new IllegalArgumentException("Subject with the same name already exists");
         }
 
-        Subject subject = Mapper.INSTANCE.toSubject(subjectDTO);
+        Subject subject = mapper.toSubject(subjectDTO);
         Subject savedSubject = subjectRepository.save(subject);
 
-        return Mapper.INSTANCE.toSubjectDTO(savedSubject);
+        return mapper.toSubjectDTO(savedSubject);
     }
 
     @Override
@@ -53,11 +54,11 @@ public class SubjectServiceImpl implements SubjectService {
             throw new IllegalArgumentException("Subject with the same name already exists");
         }
 
-        Subject updatedSubject = Mapper.INSTANCE.toSubject(subjectDTO);
+        Subject updatedSubject = mapper.toSubject(subjectDTO);
         updatedSubject.setId(id);
         Subject savedSubject = subjectRepository.save(updatedSubject);
 
-        return Mapper.INSTANCE.toSubjectDTO(savedSubject);
+        return mapper.toSubjectDTO(savedSubject);
     }
 
     @Override

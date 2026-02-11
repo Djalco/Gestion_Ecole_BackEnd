@@ -6,7 +6,7 @@ import org.mapstruct.factory.Mappers;
 import ecole.gestionecole.DTO.*;
 import ecole.gestionecole.entites.*;
 
-@org.mapstruct.Mapper
+@org.mapstruct.Mapper(componentModel = "spring")
 public interface Mapper {
     
     static Mapper INSTANCE = Mappers.getMapper(Mapper.class);
@@ -33,6 +33,10 @@ public interface Mapper {
     SubjectDTO toSubjectDTO(Subject subject);
     Subject toSubject(SubjectDTO dto);
 
+    @Mapping(source = "subject.id", target = "subjectId")
+    @Mapping(source = "subject.name", target = "subjectName") // LA LIGNE MAGIQUE
     TeacherDTO toTeacherDTO(Teacher teacher);
+
+    @Mapping(source = "subjectId", target = "subject.id")
     Teacher toTeacher(TeacherDTO dto);
 }

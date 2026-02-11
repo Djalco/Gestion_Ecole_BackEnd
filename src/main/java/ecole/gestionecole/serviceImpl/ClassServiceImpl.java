@@ -3,19 +3,20 @@ package ecole.gestionecole.serviceImpl;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
 
 import ecole.gestionecole.DTO.ClassDTO;
 import ecole.gestionecole.entites.Classes;
 import ecole.gestionecole.mapper.Mapper;
 import ecole.gestionecole.repositories.ClassRepository;
 import ecole.gestionecole.services.ClassService;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class ClassServiceImpl implements ClassService {
     
     private final ClassRepository classRepository;
+    private final Mapper mapper;
 
     @Override
     public ClassDTO createClass(ClassDTO classDTO) {
@@ -23,10 +24,10 @@ public class ClassServiceImpl implements ClassService {
             throw new IllegalArgumentException("Class with the same name already exists");
         }
 
-        Classes classes = Mapper.INSTANCE.toClasses(classDTO);
+        Classes classes = mapper.toClasses(classDTO);
         Classes savedClasses = classRepository.save(classes);
 
-        return Mapper.INSTANCE.toClassesDTO(savedClasses);
+        return mapper.toClassesDTO(savedClasses);
     }
 
     @Override
@@ -38,11 +39,11 @@ public class ClassServiceImpl implements ClassService {
                 && classRepository.existsByName(classDTO.getName())) {
                 throw new IllegalArgumentException("Class with the same name already exists");
             }
-        Classes updatedClasses = Mapper.INSTANCE.toClasses(classDTO);
+        Classes updatedClasses = mapper.toClasses(classDTO);
         updatedClasses.setId(id);
         Classes savedClasses = classRepository.save(updatedClasses);
 
-        return Mapper.INSTANCE.toClassesDTO(savedClasses);
+        return mapper.toClassesDTO(savedClasses);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class ClassServiceImpl implements ClassService {
     public List<ClassDTO> getAllClasses() {
         List<Classes> classes = classRepository.findAll();
         return classes.stream()
-                .map(Mapper.INSTANCE::toClassesDTO)
+                .map(mapper::toClassesDTO)
                 .toList();
     }
 
@@ -62,6 +63,6 @@ public class ClassServiceImpl implements ClassService {
     public ClassDTO getClassById(Integer id) {
         Classes classe = classRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Class not found with id: " + id));
-        return Mapper.INSTANCE.toClassesDTO(classe);
+        return mapper.toClassesDTO(classe);
     }
 }

@@ -2,7 +2,6 @@ package ecole.gestionecole.serviceImpl;
 
 import java.util.List;
 
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ecole.gestionecole.DTO.StudentDTO;
@@ -18,19 +17,20 @@ import lombok.RequiredArgsConstructor;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final Mapper mapper;
     //private final BCryptPasswordEncoder passwordEncoder;
     
     @Override
     public List<StudentDTO> getAllStudents() {
         return studentRepository.findAll().stream()
-                .map( Mapper.INSTANCE::toStudentDTO)
+                .map( mapper::toStudentDTO)
                 .toList();
     }
 
     @Override
     public StudentDTO getStudentById(Integer id) {
         return studentRepository.findById(id)
-                .map(Mapper.INSTANCE::toStudentDTO)
+                .map(mapper::toStudentDTO)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found with id: " + id));
     }
 
@@ -41,14 +41,14 @@ public class StudentServiceImpl implements StudentService {
             throw new IllegalArgumentException("Student with the same email already exists");
         }
 
-        Student student = Mapper.INSTANCE.toStudent(studentDTO);
+        Student student = mapper.toStudent(studentDTO);
 
         //String encodedPassword = passwordEncoder.encode(student.getPassword());
         student.setPassword(student.getPassword());
 
         Student savedStudent = studentRepository.save(student);
 
-        return Mapper.INSTANCE.toStudentDTO(savedStudent);
+        return mapper.toStudentDTO(savedStudent);
     }
 
    @Override
@@ -75,7 +75,7 @@ public StudentDTO updateStudent(Integer id, StudentDTO studentDTO) {
     
     Student savedStudent = studentRepository.save(existingStudent);
 
-    return Mapper.INSTANCE.toStudentDTO(savedStudent);
+    return mapper.toStudentDTO(savedStudent);
 }
 
     @Override
@@ -86,7 +86,7 @@ public StudentDTO updateStudent(Integer id, StudentDTO studentDTO) {
     @Override
     public List<StudentDTO> getStudentsByClassId(Integer classId) {
         return studentRepository.findByClassEntityId(classId).stream()
-                .map(Mapper.INSTANCE::toStudentDTO)
+                .map(mapper::toStudentDTO)
                 .toList();
     }
 
